@@ -144,80 +144,13 @@
     statObserver.observe(el);
   });
 
-  /* ---------- 7. Admission form submit ---------- */
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    // Clear previous message
-    formMessage.className = 'form-message';
-    formMessage.textContent = '';
-    formMessage.style.display = 'none';
-
-    // Client-side validation
-    var fullName = form.full_name.value.trim();
-    var phone    = form.phone.value.trim();
-    var email    = form.email.value.trim();
-    var address  = form.address.value.trim();
-    var classApp = form.class_applied.value;
-
-    if (!fullName || !phone || !email || !address || !classApp) {
-      showMessage('Please fill all required fields.', false);
-      return;
-    }
-
-    // Phone pattern
-    if (!/^[0-9]{10}$/.test(phone)) {
-      showMessage('Please enter a valid 10-digit phone number.', false);
-      return;
-    }
-
-    // Email pattern
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showMessage('Please enter a valid email address.', false);
-      return;
-    }
-
-    var data = {
-      full_name: fullName,
-      phone: phone,
-      email: email,
-      address: address,
-      class_applied: classApp
-    };
-
-    // Disable submit button
-    var submitBtn = form.querySelector('.form-submit');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting…';
-
-    try {
-      var res = await fetch('/api/admissions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      var result = await res.json();
-      showMessage(result.message, result.success);
-      if (result.success) form.reset();
-    } catch (err) {
-      // Fallback: if no server is running, show a success demo message
-      showMessage('Thank you! Your application has been received. Our admissions team will contact you within 48 hours.', true);
-      form.reset();
-    }
-
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Submit Application';
-  });
-
-  function showMessage(msg, success) {
-    formMessage.textContent = msg;
-    formMessage.className = 'form-message ' + (success ? 'success' : 'error');
-    formMessage.style.display = 'block';
-
-    // Auto-hide after 8 seconds
-    setTimeout(function () {
-      formMessage.style.display = 'none';
-    }, 8000);
+  /* ---------- 7. Admission form submit (Google Sheets Integration) ---------- */
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      if (typeof window.handleAdmissionSubmit === 'function') {
+        window.handleAdmissionSubmit(e);
+      }
+    });
   }
 
   /* ---------- 8. Smooth scroll for all anchor links ---------- */

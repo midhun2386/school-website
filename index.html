@@ -250,7 +250,7 @@
         <p class="section-desc">Our graduates carry the Oakwood spirit into every field they enter — from medicine and engineering to the arts and public service.</p>
       </div>
 
-      <div class="alumni-grid reveal-stagger">
+      <div class="alumni-grid reveal-stagger" id="alumni-container">
         <div class="alumni-card">
           <div class="alumni-avatar">AK</div>
           <h3>Aarav Kumar</h3>
@@ -290,7 +290,7 @@
         <p class="section-desc">Our faculty combines deep subject expertise with genuine care for every student's growth — both academic and personal.</p>
       </div>
 
-      <div class="faculty-grid reveal-stagger">
+      <div class="faculty-grid reveal-stagger" id="faculty-container">
         <div class="faculty-card">
           <div class="faculty-avatar">MK</div>
           <h3>Dr. Meera Krishnan</h3>
@@ -386,7 +386,9 @@
         <!-- Right: form -->
         <div class="admission-form" id="admission-form-card">
           <h3>Admission Enquiry</h3>
-          <form id="admission-form" novalidate>
+          <div id="error-message" style="display:none;"></div>
+          <div id="confirmation-message" style="display:none;"></div>
+          <form id="admission-form" onsubmit="handleAdmissionSubmit(event)" novalidate>
             <div class="form-group">
               <label for="full_name">Full Name *</label>
               <input type="text" id="full_name" name="full_name" placeholder="Enter your child's full name" required>
@@ -404,24 +406,24 @@
               <textarea id="address" name="address" placeholder="Your residential address" required></textarea>
             </div>
             <div class="form-group">
-              <label for="class_applied">Class Applying For *</label>
-              <select id="class_applied" name="class_applied" required>
+              <label for="class_applying">Class Applying For *</label>
+              <select id="class_applying" name="class_applying" required>
                 <option value="" disabled selected>Select class</option>
                 <option value="Pre-KG">Pre-KG</option>
                 <option value="LKG">LKG</option>
                 <option value="UKG">UKG</option>
-                <option value="1st">1st</option>
-                <option value="2nd">2nd</option>
-                <option value="3rd">3rd</option>
-                <option value="4th">4th</option>
-                <option value="5th">5th</option>
-                <option value="6th">6th</option>
-                <option value="7th">7th</option>
-                <option value="8th">8th</option>
-                <option value="9th">9th</option>
-                <option value="10th">10th</option>
-                <option value="11th">11th</option>
-                <option value="12th">12th</option>
+                <option value="1st">1st Std</option>
+                <option value="2nd">2nd Std</option>
+                <option value="3rd">3rd Std</option>
+                <option value="4th">4th Std</option>
+                <option value="5th">5th Std</option>
+                <option value="6th">6th Std</option>
+                <option value="7th">7th Std</option>
+                <option value="8th">8th Std</option>
+                <option value="9th">9th Std</option>
+                <option value="10th">10th Std</option>
+                <option value="11th">11th Std</option>
+                <option value="12th">12th Std</option>
               </select>
             </div>
             <button type="submit" class="btn btn-primary form-submit">Submit Application</button>
@@ -443,7 +445,7 @@
         <p class="section-desc">We're always looking for passionate educators and staff who share our mission. Explore current openings below.</p>
       </div>
 
-      <div class="vacancies-grid reveal-stagger">
+      <div class="vacancies-grid reveal-stagger" id="vacancies-container">
         <div class="vacancy-card">
           <span class="vacancy-dept">Mathematics</span>
           <h3>Senior Mathematics Teacher</h3>
@@ -585,6 +587,7 @@
     <a href="#admissions" class="fab fab-enquiry" aria-label="Enquire Now">✉</a>
   </div>
 
+  <script src="app.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

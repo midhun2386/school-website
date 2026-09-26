@@ -741,9 +741,58 @@ h1, h2, h3, h4 {
   margin-bottom: var(--sp-xs);
 }
 
-.faculty-qual {
+.faculty-qual,
+.faculty-card .qualification {
   font-size: 0.8rem;
   color: var(--gray);
+}
+
+.faculty-photo,
+.faculty-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto var(--sp-md);
+  display: block;
+  border: 3px solid var(--gold);
+}
+
+.alumni-photo,
+.alumni-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto var(--sp-md);
+  display: block;
+  border: 3px solid var(--green);
+}
+
+.faculty-card .subject {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: var(--sp-xs);
+}
+
+.alumni-card .achievement {
+  display: inline-block;
+  background: rgba(201,166,107,0.15);
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 50px;
+  margin-bottom: var(--sp-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.alumni-card .year {
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin-top: 4px;
 }
 
 /* ============================================================
@@ -873,6 +922,54 @@ h1, h2, h3, h4 {
   display: block;
   background: rgba(220,38,38,0.1);
   color: var(--red);
+}
+
+#confirmation-message {
+  display: none;
+  background: rgba(31, 61, 43, 0.08);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
+  text-align: center;
+  color: var(--green);
+  animation: fadeIn 0.4s ease;
+}
+
+#confirmation-message h3 {
+  font-size: 1.15rem;
+  margin-bottom: var(--sp-xs);
+  color: var(--green);
+}
+
+#confirmation-message p {
+  font-size: 0.92rem;
+  margin: 0.25rem 0;
+  color: var(--green);
+}
+
+#confirmation-message strong {
+  color: var(--green);
+  letter-spacing: 0.03em;
+}
+
+#error-message {
+  display: none;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid var(--red);
+  border-radius: var(--radius);
+  padding: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+  text-align: center;
+  color: var(--red);
+  font-size: 0.92rem;
+  font-weight: 500;
+  animation: fadeIn 0.4s ease;
+}
+
+.apply-btn {
+  display: inline-block;
+  text-align: center;
 }
 
 /* ============================================================
