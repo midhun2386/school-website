@@ -45,7 +45,14 @@ function getSpreadsheet() {
     throw new Error('Please set your SPREADSHEET_ID in the script, or bind this script to the sheet via Extensions > Apps Script.');
   }
 
-  return SpreadsheetApp.openById(SPREADSHEET_ID);
+  let id = SPREADSHEET_ID.trim();
+  // Auto-extract Sheet ID if the user pasted the entire Google Sheet URL
+  const match = id.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (match && match[1]) {
+    id = match[1];
+  }
+
+  return SpreadsheetApp.openById(id);
 }
 
 /**

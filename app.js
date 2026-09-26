@@ -7,7 +7,7 @@
 
 // Deployed Google Apps Script Web App URL
 // (Replace with your new Web App URL whenever re-deployed)
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzxoMeswenePejJRd9Jl2Ag9QdRVchTs8KbeY_hRWa60eLmDqs9Zm22t100O6vQTg64Q/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlb-tsMp0vHucBJUSKgRCQLxtI3HbLIqRZW4Jo9B1CPk8qTsDAN1TyIgRGUPxZl0hC1w/exec';
 
 /* ============================================================
    1. FACULTY DATA
