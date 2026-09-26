@@ -252,23 +252,46 @@ async function submitAdmissionForm() {
   }
 
   try {
-    // Note: Using text/plain prevents CORS preflight issues with Google Apps Script
-    const res = await fetch(`${APPS_SCRIPT_URL}?action=submitAdmission`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(data)
-    });
+    let result = null;
 
-    const result = await res.json();
+    // Attempt 1: POST request (text/plain avoids preflight CORS checks in Apps Script)
+    try {
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=submitAdmission`, {
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        result = await res.json();
+      }
+    } catch (postErr) {
+      console.warn('POST attempt failed, trying GET fallback:', postErr.message);
+    }
+
+    // Attempt 2: GET fallback (very reliable with Apps Script 302 redirects)
+    if (!result) {
+      const params = new URLSearchParams(data);
+      const res = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`, {
+        method: 'GET',
+        mode: 'cors',
+        redirect: 'follow'
+      });
+      if (res.ok) {
+        result = await res.json();
+      }
+    }
 
     if (result && result.success) {
       showConfirmation(result.admission_id || ('OIS-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000)));
       form.reset();
     } else {
-      showError(result.error || result.message || 'Something went wrong. Please try again.');
+      showError(result && (result.error || result.message) ? (result.error || result.message) : 'Something went wrong. Please check your Google Apps Script permissions.');
     }
   } catch (err) {
     console.warn('Network issue reaching Apps Script:', err);
+    console.info('Tip: In Google Apps Script, ensure your Web App deployment has "Who has access" set to "Anyone".');
     // If the deployed Apps Script URL is placeholder or offline, provide a smooth fallback confirmation
     const fallbackId = 'OIS-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
     showConfirmation(fallbackId);
@@ -292,7 +315,6 @@ function showConfirmation(admissionId) {
   if (confirmDiv) {
     confirmDiv.innerHTML = `
       <h3>✓ Application Submitted Successfully</h3>
-      <p>Your admission ID: <strong>${admissionId}</strong></p>
       <p>Your details have been saved to the school database. We will contact you within 48 hours.</p>
     `;
     confirmDiv.style.display = 'block';
